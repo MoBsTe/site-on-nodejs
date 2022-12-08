@@ -11,7 +11,7 @@ axios.get('/url')
             let div = document.createElement("div");
             // вставляемего внуьрб мейна 
             div.classList.add("main_item");
-            div.innerHTML = products[i];
+            div.innerHTML = products[i].product + products[i].price;
             main_items.appendChild(div);
         }
     });

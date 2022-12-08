@@ -4,31 +4,51 @@ const path = require("path");
 const middleware = express.static(path.join(__dirname, './../public'));
 const app = express();
 app.use(middleware);
-// const mysql = require('mysql');
+let mysql = require('mysql');
 
-// const con = mysql.createConnection({
-//     host: "localhost",
-//     user: "yourusername",
-//     password: "yourpassword"
+
+
+
+
+
+
+
+
+
+
+
+
+let connection = mysql.createConnection({
+    host: 'localhost',
+    user: 'root',
+    password: 'gm1st2001U!',
+    database: 'DB'
+});
+
+
+connection.connect(function (error) {
+    if (error) throw error;
+    console.log('Connected to the MySQL server.');
+});
+
+
+
+// connection.connect(function (err) {
+//     if (err) {
+//         return console.error('error: ' + err.message);
+//     }
+
+//     
 // });
-
-// con.connect(function (err) {
-//     if (err) throw err;
-//     console.log("Connected!");
-//     con.query("CREATE DATABASE siteOnNodeJS", function (err, result) {
-//         if (err) throw err;
-//         console.log("Database created");
-//     });
-// });
-
-
-// app.use(express.static('public'));
-
 
 
 app.get("/url", (req, res, next) => {
+    connection.query('SELECT productID, product, price FROM Products', function (error, results, fields) {
+        if (error) throw error;
+        console.log(results);
+        res.send(results);
+    });
 
-    res.json(["Tony", "Lisa", "Michael", "Ginger", "Food", "Lisa", "Lisa", "Ginger", "Ginger", "Ginger"]);
 });
 
 
@@ -52,12 +72,6 @@ app.listen(port, (error) => {
     }
     console.log('[INFO] Node environment: ' + process.env.NODE_ENV);
 });
-
-
-
-
-
-
 
 
 // app.listen(3000, () => {
